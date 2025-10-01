@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>BOLT-LMM: Efficient Bayesian mixed model analysis increases association
+        power in large cohorts</title>
+    <meta name="description" content="????">
+    <meta name="author" content="Wenxin Jiang">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/league.css" id="theme">
+    <link rel="stylesheet" href="dist/theme/dracula.css" id="theme">
+
+    <link rel="stylesheet" href="css/custom.css">
+
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section>
+                <h2>
+                    BOLT-LMM
+                </h2>
+                
+                <aside class="notes">
+
+                </aside>
+            </section>
+
+          
+
+            <!-- <section>
+
+                <aside class="notes">
+                </aside>
+            </section> -->
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <link rel="stylesheet" href="plugin/highlight/github-dark.css" id="highlight-theme" />
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/menu/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            // disableLayout: true,
+            transition: 'none',
+            slideNumber: true,
+            showSlideNumber: 'all',
+            help: true,
+            mathjax3: {
+                mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+                tex: {
+                    inlineMath: [
+                        ['$', '$'],
+                        ['\\(', '\\)'],
+                    ],
+                },
+                options: {
+                    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                },
+            },
+            menu: {
+                titleSelector: 'h1, h2, h3',
+                hideMissingTitles: true,
+            },
+            plugins: [RevealMath.MathJax3, RevealHighlight, RevealNotes, RevealMenu],
+            // plugins: [RevealMath.MathJax3, RevealHighlight, RevealNotes],
+        });
+    </script>
+</body>
+
+</html>
