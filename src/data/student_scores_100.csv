@@ -1,0 +1,101 @@
+Name   , Class, Subject, Score
+Alice  , B01  , Art    , 85
+Bob    , B02  , English, 74
+Charlie, A03  , Science, 60
+David  , A03  , Art    , 75
+Eva    , A02  , History, 80
+Frank  , A02  , History, 76
+Grace  , B01  , Science, 81
+Hannah , A01  , Science, 80
+Ian    , B02  , Science, 75
+Jack   , A02  , History, 99
+Kathy  , A01  , History, 60
+Leo    , A02  , Art    , 91
+Mona   , A02  , History, 88
+Nina   , B01  , Art    , 69
+Oscar  , A03  , Math   , 88
+Paul   , A02  , English, 68
+Quinn  , B01  , Art    , 87
+Rachel , B01  , Math   , 82
+Sam    , B02  , Art    , 88
+Tina   , A02  , Math   , 75
+Uma    , B01  , History, 69
+Vera   , B02  , Math   , 81
+Will   , A01  , Math   , 73
+Xander , A03  , Science, 86
+Yara   , A01  , Science, 85
+Zane   , A02  , English, 93
+Alice  , A01  , History, 83
+Bob    , A02  , Math   , 90
+Charlie, B02  , Science, 64
+David  , A03  , Math   , 86
+Eva    , A03  , Art    , 71
+Frank  , A03  , Math   , 88
+Grace  , A02  , English, 66
+Hannah , A01  , History, 77
+Ian    , B02  , History, 78
+Jack   , B02  , Science, 84
+Kathy  , B02  , History, 81
+Leo    , A03  , History, 86
+Mona   , A02  , English, 85
+Nina   , B01  , History, 92
+Oscar  , B01  , History, 90
+Paul   , A02  , History, 78
+Quinn  , A01  , Math   , 88
+Rachel , A01  , History, 67
+Sam    , B02  , Math   , 71
+Tina   , A03  , Math   , 75
+Uma    , B02  , Math   , 77
+Vera   , A03  , Math   , 72
+Will   , B01  , Math   , 80
+Xander , B01  , English, 80
+Yara   , A03  , Math   , 76
+Zane   , A01  , Math   , 79
+Alice  , A03  , English, 60
+Bob    , B01  , Science, 95
+Charlie, A03  , Math   , 72
+David  , B01  , English, 94
+Eva    , A03  , Math   , 80
+Frank  , B02  , Science, 68
+Grace  , B01  , History, 64
+Hannah , B01  , Math   , 81
+Ian    , A01  , English, 85
+Jack   , A01  , Math   , 89
+Kathy  , A02  , English, 88
+Leo    , A02  , Math   , 68
+Mona   , B01  , History, 81
+Nina   , A03  , Math   , 85
+Oscar  , A01  , Science, 88
+Paul   , B01  , Math   , 85
+Quinn  , B01  , Science, 89
+Rachel , A01  , Science, 98
+Sam    , A01  , Art    , 70
+Tina   , A02  , Science, 69
+Uma    , B02  , Math   , 67
+Vera   , A03  , Math   , 80
+Will   , A01  , History, 100
+Xander , B02  , Science, 81
+Yara   , A03  , Science, 80
+Zane   , B01  , Math   , 95
+Alice  , B02  , History, 70
+Bob    , A03  , Math   , 90
+Charlie, A01  , History, 78
+David  , A01  , Art    , 87
+Eva    , B02  , Math   , 100
+Frank  , B01  , Math   , 95
+Grace  , B01  , Art    , 90
+Hannah , A03  , English, 77
+Ian    , A01  , English, 82
+Jack   , A02  , English, 84
+Kathy  , A03  , English, 84
+Leo    , A01  , Math   , 86
+Mona   , A03  , Art    , 73
+Nina   , A02  , Math   , 63
+Oscar  , B02  , History, 85
+Paul   , B02  , History, 100
+Quinn  , A01  , History, 64
+Rachel , A03  , Math   , 100
+Sam    , A02  , Art    , 81
+Tina   , A01  , History, SomeError
+Uma    , A02  , Science, 81
+Vera   , B02  , History, 69

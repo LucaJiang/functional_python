@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>BOLT-LMM: Efficient Bayesian mixed model analysis increases association
-        power in large cohorts</title>
-    <meta name="description" content="????">
+        <title>Functional Python: Practical Paradigms for Readable and Robust Code</title>
+    <meta name="description" content="Explore functional programming concepts in Python for cleaner, more maintainable code.">
     <meta name="author" content="Wenxin Jiang">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,8 +14,7 @@
     <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css">
     <link rel="stylesheet" href="dist/theme/league.css" id="theme">
-    <link rel="stylesheet" href="dist/theme/dracula.css" id="theme">
-
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
     <link rel="stylesheet" href="css/custom.css">
 
 </head>
@@ -25,23 +23,326 @@
     <div class="reveal">
         <div class="slides">
 
-            <section>
-                <h2>
-                    BOLT-LMM
-                </h2>
-                
-                <aside class="notes">
+<section>
+    <h2>Functional Python</h2>
+    <h3>Practical Paradigms for Readable and Robust Code</h3>
+    <p style="text-align:center;">Wenxin Jiang · PyCon HK</p>
+    <p style="text-align:center;">Oct. 11, 2025</p>
+    <aside class="notes">
+While Python's object-oriented paradigm dominates developer discussions, its functional capabilities offer powerful
+tools for modern development. This talk explores how integrating functional programming (FP) concepts can enhance code
+readability and maintainability in Python projects. We will discover how to transform imperative logic flow into
+composable functions and implement declarative error-handling using intuitive railway patterns. This talk aims to
+provide an optional toolbox for Python developers to improve code quality.
 
-                </aside>
-            </section>
+Functional programming (FP) offers powerful tools and is increasingly adopted across modern languages, including Python.
+Since Python is not a purely functional language, rather than advocating for a complete shift to FP, this talk will
+demonstrate how to effectively integrate functional techniques, such as pure functions, higher-order functions and
+Monads, into your Python codebase. By converting imperative procedure-style logic into composable functions, developers
+can focus more on the "what" (logic) rather than the "how" (implementation details). As for error handling, we will
+explore how to organize code using a fun and easy-to-understand railway analogy. By the end of this talk, you'll
+understand how to apply basic FP concepts in Python, which improve code's readability, maintainability, and robustness.
+    </aside>
+</section>
 
-          
+<section>
+    <h2>Who I am</h2>
+    <div>
+        <ul>
+            <li>Wenxin Jiang, Ph.D. Student @ CityUHK</li>
+            <li>Major in Biostatistics</li>
+            <li>Research interests: Genetics, High Dimensional Statistics</li>
+        </ul>
+    </div>
+    <aside class="notes">
+A bit about myself: I'm Wenxin Jiang, currently a Ph.D. student at City University of Hong Kong, majoring in Biostatistics. My
+research interests include genetics and high-dimensional statistics. In my academic and research work, I often deal with large datasets and complex analyses, which
+require writing clean and maintainable code. This has led me to explore various programming paradigms, including functional programming, to improve the quality of my code.
+    </aside>
+</section>
 
-            <!-- <section>
+<section>
+    <h2>An Illustrative Example</h2>
+    <div style="display: flex; justify-content: center; margin-top: 2em;">
+        <table style="border-collapse: collapse; width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;">
+            <thead>
+                <tr style="background: linear-gradient(135deg, #667eea 0%, #667eea 100%); color: white;">
+                    <th style="padding: 15px 20px; text-align: left; font-weight: 600; font-size: 1.1em;">Name</th>
+                    <th style="padding: 15px 20px; text-align: left; font-weight: 600; font-size: 1.1em;">Class</th>
+                    <th style="padding: 15px 20px; text-align: left; font-weight: 600; font-size: 1.1em;">Subject</th>
+                    <th style="padding: 15px 20px; text-align: left; font-weight: 600; font-size: 1.1em;">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: rgba(102, 126, 234, 0.1); transition: all 0.3s ease;">
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">Alice</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">B01</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">Art</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 600; color: #667eea;">85</td>
+                </tr>
+                <tr style="background-color: rgba(118, 75, 162, 0.1); transition: all 0.3s ease;">
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">Bob</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">B02</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">English</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 600; color: #667eea;">74</td>
+                </tr>
+                <tr style="background-color: rgba(118, 75, 162, 0.1); transition: all 0.3s ease;">
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">Charlie</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">A03</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">Art</td>
+                    <td style="padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 600; color: #eb2a2a;">Error</td>
+                </tr>
+                <tr style="background-color: rgba(102, 126, 234, 0.1); transition: all 0.3s ease;">
+                    <td style="padding: 12px 20px;">...</td>
+                    <td style="padding: 12px 20px;">...</td>
+                    <td style="padding: 12px 20px;">...</td>
+                    <td style="padding: 12px 20px;">...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <aside class="notes">
+Here’s a simple example of a student score table. Each row represents a student with their name, class, subject, and score. Notice that one of the scores is marked as "Error," indicating an issue with that entry. In a real-world scenario, we might need to process this data, handle errors, and ensure everything is clean and accurate. Throughout this talk, we will explore how functional programming techniques can help us manage and transform such data more effectively.
+    </aside>
+</section>
 
-                <aside class="notes">
-                </aside>
-            </section> -->
+<section>
+<h2>Imperative Style: How To Do</h2>
+<div>
+    <img src="img/illu_imperative.png" alt="Imperative Code Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
+</div>
+<aside class="notes">
+This is an example of imperative programming style. We process each row of the dataframe using a for loop, extracting data, handling errors with try-except blocks, calculating grades with if-elif chains, and manually updating statistics. Notice how the code focuses on "how" to perform each step - we explicitly tell the computer what to do at every stage. This approach can become verbose and harder to maintain as the logic grows more complex.
+</aside>
+</section>
+
+<section>
+    <h2>FP Style: What To Do</h2>
+    <div>
+        <img src="img/illu_fp.png" alt="Functional Code Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
+</div>
+<aside class="notes">
+This is the functional programming approach to the same problem. Notice how much cleaner and more declarative this code is. Instead of telling the computer "how" to do every step, we focus on "what" we want to achieve. We use the pipe() method to chain transformations, making the data flow explicit and easy to follow. Functions like add_grade_column, filter_valid_scores, and calculate_group_average are pure functions that can be tested and reused independently. This approach is more concise, more readable, and easier to maintain.
+</aside>
+</section>
+
+<section>
+    <h2>What is FP?</h2>
+    <p>Core: <strong>Pure Functions</strong></p>
+    <ul>
+        <li>Functions with <strong>no side effects</strong></li>
+        <li>Avoid global state</li>
+        <li>Same result for the same input</li>
+        <li>One function, one task</li>
+    </ul>
+    <aside class="notes">
+n a functional program, input flows through a set of functions. Each function operates on its input and produces some
+output. Functional style discourages functions with side effects that modify internal state or make other changes that
+aren’t visible in the function’s return value. Functions that have no side effects at all are called purely functional.
+Avoiding side effects means not using data structures that get updated as a program runs; every function’s output must
+only depend on its input.
+
+
+Functional programming is a style of coding where the focus is on writing functions that don’t alter the state of the
+program. Key principles of FP include pure functions—functions that always give the same output for the same input, and
+immutability, where data cannot be changed once created. These principles make the code easier to test, reason about,
+and scale.
+    </aside>
+</section>
+
+<section>
+    <h2>What is FP?</h2>
+    <div style="display: flex; justify-content: center; margin-top: 0em;">
+        <table style="border-collapse: collapse; width: 80%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden; font-size: 0.85em;">
+            <thead>
+                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <th style="padding: 15px 20px; text-align: center; font-weight: 600; width: 33%;">Aspect</th>
+                    <th style="padding: 15px 20px; text-align: center; font-weight: 600; width: 33%;">Functions</th>
+                    <th style="padding: 15px 20px; text-align: center; font-weight: 600; width: 33%;">Variables</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: rgba(102, 126, 234, 0.15);">
+                    <td style="padding: 15px 20px; text-align: center; font-weight: 600; color: #667eea;">Principle</td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        <strong style="font-size: 1.1em;">No Side Effects</strong>
+                    </td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        <strong style="font-size: 1.1em;">Immutability</strong>, Avoid Global State
+                    </td>
+                </tr>
+                <tr style="background-color: rgba(118, 75, 162, 0.1);">
+                    <td style="padding: 15px 20px; text-align: center; font-weight: 600; color: #667eea;">Meaning</td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        Output depends<br/>only on input
+                    </td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        Data cannot be<br/>modified
+                    </td>
+                </tr>
+                <tr style="background-color: rgba(102, 126, 234, 0.15);">
+                    <td style="padding: 15px 20px; text-align: center; font-weight: 600; color: #667eea;">Result</td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        Predictable &<br/>Testable
+                    </td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        Safe &<br/>Thread-safe
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <aside class="notes">
+This table shows how functional programming principles apply from two perspectives. From the function perspective, we emphasize "no side effects" - functions should only depend on their inputs and not modify external state. This is directly related to the variable perspective of "immutability" - if data cannot be changed, functions naturally cannot have side effects. Pure functions are predictable and testable, while immutable data is safe from unexpected changes. These two concepts are two sides of the same coin, working together to make code more reliable and easier to reason about.
+    </aside>
+</section>
+
+<section>
+    <h2>Immutability: The Problem</h2>
+    <p style="color: #eb2a2a;">❌ Mutable Approach</p>
+    <pre><code class="python">scores = [85, 74, 60] # Shared mutable state
+
+def add_bonus(score_list):
+    for i in range(len(score_list)):
+        score_list[i] += 10  # Modifies original!
+    return score_list
+
+original_scores = scores
+bonus_scores = add_bonus(scores)
+
+print(original_scores) # Output: [85, 74, 60]  😱 Changed!</code></pre>
+<p style="color: #eb2a2a; margin-top: 5px; font-size: 1em;">⚠️ Unexpected mutation causes bugs!</p>
+    <aside class="notes">
+This example demonstrates a common bug with mutable data. The function modifies the original list directly. This causes unexpected behavior because both original_scores and bonus_scores point to the same mutated list. This is especially dangerous in larger programs where you might not realize data is being shared and modified.
+    </aside>
+</section>
+
+<section>
+    <h2>Immutability: The Solution</h2>
+    <p style="color: #4ade80;">✅ Immutable Approach</p>
+    <pre><code class="python">scores = [85, 74, 60] # Immutable approach
+
+def add_bonus(score_list):
+    # Create new list, don't modify original
+    return [score + 10 for score in score_list]
+
+original_scores = scores
+bonus_scores = add_bonus(scores)
+
+print(original_scores)
+# Output: [85, 74, 60]  ✓ Unchanged!</code></pre>
+    <p style="color: #4ade80; margin-top: 5px; font-size: 1em;">✓ Original data is safe!</p>
+    <aside class="notes">
+The immutable approach creates a new list instead of modifying the original. This ensures the original data remains unchanged, making the code predictable and preventing subtle bugs. This is a key principle of functional programming - always create new data structures instead of modifying existing ones.
+    </aside>
+</section>
+
+<section>
+    <h2>Why FP?</h2>
+    <ul>
+        <li><strong>Readability:</strong> Focus on "what" rather than "how"</li>
+        <li><strong>Modularity:</strong> Small, isolated functions</li>
+        <li><strong>Robustness/Testability:</strong> Easier to test</li>
+    </ul>
+    <aside class="notes">
+Functional programming offers several advantages that can significantly enhance the quality of your code. First, it
+improves readability by allowing you to focus on "what" the code is doing rather than "how" it is implemented. This is achieved through the use of pure functions and higher-order functions, which make the code more declarative and easier to understand.
+
+These are some advantages of functional programming:
+• Absence of side effects can make your programs more robust
+• Programs tend to be more modular and come typically in smaller building blocks
+• Better testable - a call with same parameters always returns same result due to no global state (except when
+intended such as random number generation or IO)
+• Focus on algorithms
+• Conceptional fit with parallel / concurrent programming
+• Live updates - Install new release while running (Erlang)
+    </aside>
+</section>
+
+<section>
+    <h2 style="font-size: 1.2em;">Currying & Higher-Order Functions</h2>
+<img src="img/currying.jpg" alt="Currying Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
+    <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://www.linkedin.com/pulse/currying-takes-your-functions-whole-new-level-power-abdul-ghaffar/">Currying takes your functions to a whole new level of flexibility and power!</a></p>
+    <aside class="notes">
+Currying is a technique in functional programming where a function that takes multiple arguments is transformed into a sequence of functions, each taking a single argument. In the uncurrying example, we pass all arguments at once. In the currying example, we pass one argument at a time, with each function call returning another function until all arguments are provided. This allows for partial application and more flexible function composition.
+    </aside>
+</section>
+
+<section>
+    <h2>Currying: Why Important?</h2>
+    <div style="margin-top: 1em;">
+        <p style="margin-bottom: 1em;">Math to Code: Function Composition</p>
+        <p style="font-size: 1em; margin-bottom: 1em;">
+            $h(g(f(x))) = (h \circ g \circ f)(x)$
+        </p>
+        <div style="font-size: 0.8em; margin-left: 2em;">
+            <div style="margin-bottom: 0em;">
+                <p style="color: #eb2a2a; margin-bottom: 0.5em; text-align: left;">❌ Nested (Hard to read)</p>
+                <pre><code class="python" style="font-size: 1.2em;">result = h(g(f(df), arg1=a), arg2=b)</code></pre>
+            </div>
+            <div>
+                <p style="color: #4ade80; margin-bottom: 0.5em; text-align: left;">✅ Pipeline (Clear flow)</p>
+                <pre><code class="python" style="font-size: 1.2em;">result = df.pipe(f).pipe(g, arg1=a).pipe(h, arg2=b)</code></pre>
+            </div>
+        </div>
+    </div>
+    <aside class="notes">
+This slide demonstrates why currying is important. Mathematically, it's related to function composition. In programming, currying allows us to transform nested function calls into a clean pipeline. The nested version requires reading from inside out, while the pipeline version creates a clear, left-to-right data flow that's much easier to read and maintain.
+    </aside>
+</section>
+
+<section>
+    <h2>Railway Analogy for Error Handling</h2>
+    <div>
+        <img src="img/railway_func_combine.png" alt="Railway Pattern" style="width: 70%; background-color: white; box-shadow: 0 4px 6px rgba(255, 255, 255, 0.3); border-radius: 8px;"/>
+    </div>
+    <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
+    <aside class="notes">
+
+    </aside>
+</section>
+
+<section>
+    <h2>Railway Analogy for Error Handling</h2>
+    <div>
+        <img src="img/railway_two_track.png" alt="Railway Pattern Code Example" style="width: 70%; background-color: white; box-shadow: 0 4px 6px rgba(255, 255, 255, 0.3); border-radius: 8px;"/>
+    </div>
+    <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
+    <aside class="notes">
+This slide illustrates the railway pattern for error handling. The idea is to represent the flow of data through a series of functions as two parallel tracks: one for successful operations and another for errors. Each function takes an input and returns either a success or an error. If a function encounters an error, it switches to the error track, and subsequent functions are skipped. This approach allows for clear and concise error handling without deeply nested try-except blocks, making the code easier to read and maintain.
+    </aside>
+</section>
+
+<section>
+    <h2>Other Interesting Concepts in FP</h2>
+    <div>
+        <ul>
+            <li><strong>Lazy Evaluation:</strong> Delay computation until necessary, improving performance.</li>
+            <li><strong>Recursion:</strong> Use recursive functions for problems like tree traversal.</li>
+            <li><strong>Monads:</strong> Handle side effects (like state, I/O) in a controlled manner.</li>
+            <li><strong>Pattern Matching:</strong> Simplify conditional logic based on data structure.</li>
+        </ul>
+    </div>
+    <aside class="notes">
+    </aside>
+</section>
+
+
+<section>
+    <h2>Thank you for attention!</h2>
+    <ul>
+        <li>Wenxin Jiang</li>
+        <li>GitHub: <a href="https://github.com/LucaJiang" target="_blank">LucaJiang</a></li>
+        <li>This presentation: <a
+                href="https://lucajiang.github.io/functional_python/">lucajiang.github.io/functional_python/</a></li>
+    </ul>
+    <aside class="notes">
+        Thank you all for your attention! If you have any questions or want to discuss anything further, feel free to
+        reach out to me on GitHub or check out the slides online.
+    </aside>
+</section>
+
+
         </div>
     </div>
 
