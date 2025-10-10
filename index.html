@@ -26,23 +26,23 @@
 <section>
     <h2>Functional Python</h2>
     <h3>Practical Paradigms for Readable and Robust Code</h3>
-    <p style="text-align:center;">Wenxin Jiang · PyCon HK</p>
-    <p style="text-align:center;">Oct. 11, 2025</p>
-    <aside class="notes">
-While Python's object-oriented paradigm dominates developer discussions, its functional capabilities offer powerful
-tools for modern development. This talk explores how integrating functional programming (FP) concepts can enhance code
-readability and maintainability in Python projects. We will discover how to transform imperative logic flow into
-composable functions and implement declarative error-handling using intuitive railway patterns. This talk aims to
-provide an optional toolbox for Python developers to improve code quality.
-
-Functional programming (FP) offers powerful tools and is increasingly adopted across modern languages, including Python.
-Since Python is not a purely functional language, rather than advocating for a complete shift to FP, this talk will
-demonstrate how to effectively integrate functional techniques, such as pure functions, higher-order functions and
-Monads, into your Python codebase. By converting imperative procedure-style logic into composable functions, developers
-can focus more on the "what" (logic) rather than the "how" (implementation details). As for error handling, we will
-explore how to organize code using a fun and easy-to-understand railway analogy. By the end of this talk, you'll
-understand how to apply basic FP concepts in Python, which improve code's readability, maintainability, and robustness.
-    </aside>
+<div style="display: flex; justify-content: center; align-items: center; gap: 4rem; margin-top: 2.5em;">
+    <img src="img/pycon_logo.svg" alt="PyCon HK Logo" style="height: 160px;">
+    <div style="text-align: center;margin-left: 4rem;margin-right: 4rem;">
+        <p style="margin: 0;">Wenxin Jiang</p>
+        <p style="margin: 0; font-size: 0.8em;">Oct. 11, 2025</p>
+    </div>
+    <img src="img/CityU_logo.svg" alt="CityU Logo" style="height: 120px;">
+</div>
+<aside class="notes">
+Good afternoon, everyone. It's a pleasure to be here at PyCon HK.
+While object-oriented design gets most of the attention in Python, there's another way of thinking that can make your
+code clearer and more reliable. It's called functional programming.
+Today, in just 15 minutes, I'll show you how a few simple ideas from functional programming, like writing predictable
+functions and avoiding hidden changes to your data, can help you write Python code that's easier to understand, easier
+to test, and more enjoyable to work with.
+Let's get started.
+</aside>
 </section>
 
 <section>
@@ -55,15 +55,16 @@ understand how to apply basic FP concepts in Python, which improve code's readab
         </ul>
     </div>
     <aside class="notes">
-A bit about myself: I'm Wenxin Jiang, currently a Ph.D. student at City University of Hong Kong, majoring in Biostatistics. My
-research interests include genetics and high-dimensional statistics. In my academic and research work, I often deal with large datasets and complex analyses, which
-require writing clean and maintainable code. This has led me to explore various programming paradigms, including functional programming, to improve the quality of my code.
+A bit about me: I'm Wenxin Jiang, a PhD student at CityUHK working with large genetics datasets. In my research, I use
+both Python and R to analyze complex data. Like many of you, I'm always looking for ways to write code that's
+not just correct, but also clear and reliable. That search is what led me to explore functional programming in Python.
+And I'm excited to share what I've learned with you today.
     </aside>
 </section>
 
 <section>
     <h2>An Illustrative Example</h2>
-    <div style="display: flex; justify-content: center; margin-top: 2em;">
+    <div style="display: flex; justify-content: center; margin-top: 1em;">
         <table style="border-collapse: collapse; width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px; overflow: hidden;">
             <thead>
                 <tr style="background: linear-gradient(135deg, #667eea 0%, #667eea 100%); color: white;">
@@ -102,7 +103,10 @@ require writing clean and maintainable code. This has led me to explore various 
         </table>
     </div>
     <aside class="notes">
-Here’s a simple example of a student score table. Each row represents a student with their name, class, subject, and score. Notice that one of the scores is marked as "Error," indicating an issue with that entry. In a real-world scenario, we might need to process this data, handle errors, and ensure everything is clean and accurate. Throughout this talk, we will explore how functional programming techniques can help us manage and transform such data more effectively.
+Here's a simple example: a table of student scores. Each row shows a student's name, class, subject, and their score.
+You can see one entry has Error indicating the data was missing or corrupted.
+In real projects, we often work with messy data like this. We need to clean it, calculate grades, find
+averages for each subject or class, and handle errors carefully.
     </aside>
 </section>
 
@@ -112,7 +116,8 @@ Here’s a simple example of a student score table. Each row represents a studen
     <img src="img/illu_imperative.png" alt="Imperative Code Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
 </div>
 <aside class="notes">
-This is an example of imperative programming style. We process each row of the dataframe using a for loop, extracting data, handling errors with try-except blocks, calculating grades with if-elif chains, and manually updating statistics. Notice how the code focuses on "how" to perform each step - we explicitly tell the computer what to do at every stage. This approach can become verbose and harder to maintain as the logic grows more complex.
+This is the imperative way. Just keep the code there and don't read it. In imperative style, we tell the computer exactly how to do everything. We write a for loop to process each row, use try-except to handle errors, and if-elif chains to calculate grades. We manually update statistics step by step. It
+works, but it's long and hard to follow, especially when things get more complex. You have to read through all the details to understand the overall logic.
 </aside>
 </section>
 
@@ -122,7 +127,9 @@ This is an example of imperative programming style. We process each row of the d
         <img src="img/illu_fp.png" alt="Functional Code Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
 </div>
 <aside class="notes">
-This is the functional programming approach to the same problem. Notice how much cleaner and more declarative this code is. Instead of telling the computer "how" to do every step, we focus on "what" we want to achieve. We use the pipe() method to chain transformations, making the data flow explicit and easy to follow. Functions like add_grade_column, filter_valid_scores, and calculate_group_average are pure functions that can be tested and reused independently. This approach is more concise, more readable, and easier to maintain.
+Now, in the functional approach, we focus on what we want to achieve, not how. We chain operations together using
+methods like pipe, creating a clear pipeline. Each step is a simple function: add grades, filter scores, calculate
+averages. This makes the main code shorter, easier to follow, and much simpler to test and modify.
 </aside>
 </section>
 
@@ -136,17 +143,10 @@ This is the functional programming approach to the same problem. Notice how much
         <li>One function, one task</li>
     </ul>
     <aside class="notes">
-n a functional program, input flows through a set of functions. Each function operates on its input and produces some
-output. Functional style discourages functions with side effects that modify internal state or make other changes that
-aren’t visible in the function’s return value. Functions that have no side effects at all are called purely functional.
-Avoiding side effects means not using data structures that get updated as a program runs; every function’s output must
-only depend on its input.
-
-
-Functional programming is a style of coding where the focus is on writing functions that don’t alter the state of the
-program. Key principles of FP include pure functions—functions that always give the same output for the same input, and
-immutability, where data cannot be changed once created. These principles make the code easier to test, reason about,
-and scale.
+At its heart, functional programming is about pure functions. A pure function is like a simple math equation: it takes
+some input, gives you an output. It doesn't change anything else in your program - no side effects. It
+always gives the same result for the same input. And each function should do just one thing well. Pure functions make your code
+predictable and easy to test.
     </aside>
 </section>
 
@@ -193,7 +193,11 @@ and scale.
         </table>
     </div>
     <aside class="notes">
-This table shows how functional programming principles apply from two perspectives. From the function perspective, we emphasize "no side effects" - functions should only depend on their inputs and not modify external state. This is directly related to the variable perspective of "immutability" - if data cannot be changed, functions naturally cannot have side effects. Pure functions are predictable and testable, while immutable data is safe from unexpected changes. These two concepts are two sides of the same coin, working together to make code more reliable and easier to reason about.
+This table shows the two key ideas in functional programming. On the function side, we want no side effects. Functions
+shouldn't unexpectedly change other parts of your program. On the variable side, we want immutability. Data shouldn't
+be changed once created. These two ideas work together: if your data can't change, your functions can't have side
+effects. You codes are safe in multiple threads, which I think is very important in recent released Python versions, where
+true parallelism is possible.
     </aside>
 </section>
 
@@ -213,7 +217,10 @@ bonus_scores = add_bonus(scores)
 print(original_scores) # Output: [85, 74, 60]  😱 Changed!</code></pre>
 <p style="color: #eb2a2a; margin-top: 5px; font-size: 1em;">⚠️ Unexpected mutation causes bugs!</p>
     <aside class="notes">
-This example demonstrates a common bug with mutable data. The function modifies the original list directly. This causes unexpected behavior because both original_scores and bonus_scores point to the same mutated list. This is especially dangerous in larger programs where you might not realize data is being shared and modified.
+As we just saw, immutability is a key idea in functional programming. But what happens when we ignore it? Here's a
+common pitfall. We have a list of scores, and we pass it to a function to add a bonus. But the function changes the
+original list! Now both variables point to the same changed data. This kind of bug is hard to spot, especially in larger
+programs where data is shared around. It's exactly why we want to avoid mutable state.
     </aside>
 </section>
 
@@ -233,7 +240,10 @@ print(original_scores)
 # Output: [85, 74, 60]  ✓ Unchanged!</code></pre>
     <p style="color: #4ade80; margin-top: 5px; font-size: 1em;">✓ Original data is safe!</p>
     <aside class="notes">
-The immutable approach creates a new list instead of modifying the original. This ensures the original data remains unchanged, making the code predictable and preventing subtle bugs. This is a key principle of functional programming - always create new data structures instead of modifying existing ones.
+Now let's look at the functional solution. Instead of changing the original data, we create a brand new list with the
+updated values. The original stays safe and unchanged. It makes your
+code predictable and prevents some hard-to-find bugs. Sometimes, I found the bug caused by another function hundreds of lines away.
+When I found it, it was like a Goblin suddenly jumping out and saying "Surprise! I changed your data!".
     </aside>
 </section>
 
@@ -245,33 +255,31 @@ The immutable approach creates a new list instead of modifying the original. Thi
         <li><strong>Robustness/Testability:</strong> Easier to test</li>
     </ul>
     <aside class="notes">
-Functional programming offers several advantages that can significantly enhance the quality of your code. First, it
-improves readability by allowing you to focus on "what" the code is doing rather than "how" it is implemented. This is achieved through the use of pure functions and higher-order functions, which make the code more declarative and easier to understand.
-
-These are some advantages of functional programming:
-• Absence of side effects can make your programs more robust
-• Programs tend to be more modular and come typically in smaller building blocks
-• Better testable - a call with same parameters always returns same result due to no global state (except when
-intended such as random number generation or IO)
-• Focus on algorithms
-• Conceptional fit with parallel / concurrent programming
-• Live updates - Install new release while running (Erlang)
+So why FP?
+First, readability: you focus on what you want, not how to do it. Like giving directions by saying "go to the store"
+instead of listing every turn.
+Second, modularity: small functions are like Lego blocks - easy to combine and reuse.
+Third, testability: same input always gives same output. No surprises.
+It's about writing code that's easier to read, test, and maintain.
     </aside>
 </section>
 
-<section>
+<section data-visibility="hidden">
     <h2 style="font-size: 1.2em;">Currying & Higher-Order Functions</h2>
 <img src="img/currying.jpg" alt="Currying Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
     <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://www.linkedin.com/pulse/currying-takes-your-functions-whole-new-level-power-abdul-ghaffar/">Currying takes your functions to a whole new level of flexibility and power!</a></p>
     <aside class="notes">
-Currying is a technique in functional programming where a function that takes multiple arguments is transformed into a sequence of functions, each taking a single argument. In the uncurrying example, we pass all arguments at once. In the currying example, we pass one argument at a time, with each function call returning another function until all arguments are provided. This allows for partial application and more flexible function composition.
+xx This image shows the key difference: uncurrying is the normal way - passing all arguments at once like f(a, b, c).
+Currying breaks this into steps: f(a)(b)(c). Each call takes one argument and returns a new function.
+Why does this matter? It lets you create partial functions. You can fix some arguments early and reuse the function in
+different ways. This makes your code more flexible and modular.
     </aside>
 </section>
 
 <section>
-    <h2>Currying: Why Important?</h2>
+    <h2>Pipeline Style</h2>
     <div style="margin-top: 1em;">
-        <p style="margin-bottom: 1em;">Math to Code: Function Composition</p>
+        <!-- <p style="margin-bottom: 0.6em;text-align: left;">Math to Code: </p> -->
         <p style="font-size: 1em; margin-bottom: 1em;">
             $h(g(f(x))) = (h \circ g \circ f)(x)$
         </p>
@@ -287,18 +295,25 @@ Currying is a technique in functional programming where a function that takes mu
         </div>
     </div>
     <aside class="notes">
-This slide demonstrates why currying is important. Mathematically, it's related to function composition. In programming, currying allows us to transform nested function calls into a clean pipeline. The nested version requires reading from inside out, while the pipeline version creates a clear, left-to-right data flow that's much easier to read and maintain.
+Mathematically, we have two ways to present composition of functions. One is through the traditional nested approach, and the other is the pipeline style. Similarly in code, we can either nest function calls or use a pipeline style with pipe.
+But nested code is like a maze - you have to find the innermost function and read outward.
+The pipeline style fixes this.
+It tells a clear story: first apply f, then pipe to g with argument a, then to h with b. The flow is obvious and clean.
     </aside>
 </section>
 
 <section>
-    <h2>Railway Analogy for Error Handling</h2>
+    <h2>Railway Analogy for Function Composition</h2>
     <div>
         <img src="img/railway_func_combine.png" alt="Railway Pattern" style="width: 70%; background-color: white; box-shadow: 0 4px 6px rgba(255, 255, 255, 0.3); border-radius: 8px;"/>
     </div>
     <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
     <aside class="notes">
-
+So functional programming is a practical way to build complex behavior from small, reliable
+pieces.
+Think of each function as a small piece of track. This one turns a pineapple into an apple, and this one turns an apple into a
+banana. We can compose them, because the output and the input are same kinds of objects.
+Each piece is small, testable, and reusable. If the requirement changes, we can just add functions and change several pieces without rewriting the whole track.
     </aside>
 </section>
 
@@ -309,21 +324,32 @@ This slide demonstrates why currying is important. Mathematically, it's related 
     </div>
     <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
     <aside class="notes">
-This slide illustrates the railway pattern for error handling. The idea is to represent the flow of data through a series of functions as two parallel tracks: one for successful operations and another for errors. Each function takes an input and returns either a success or an error. If a function encounters an error, it switches to the error track, and subsequent functions are skipped. This approach allows for clear and concise error handling without deeply nested try-except blocks, making the code easier to read and maintain.
+Now let's add the second track. Top green track for normal values, bottom red track for errors. Each function acts like a switch:
+if it succeeds, we stay on the green track; if it fails, we drop to the red track and skip the rest.
+
+In Python, when you raise an exception, it automatically jumps to the nearest except block—that's our red bypass. We
+write small, composable steps that either return a value or raise a specific error. Then we handle all errors in one
+place.
+Therefore, our main pipeline stays clean and focused on the happy path. And we don't need nested try-except blocks everywhere.
     </aside>
 </section>
 
 <section>
     <h2>Other Interesting Concepts in FP</h2>
-    <div>
+    <div style="font-size: 0.8em; margin-top: 1em;">
         <ul>
+            <li><strong>Iterators:</strong> <code>for i in iter_obj:</code></li>
+            <li><strong>Map/Filter/Reduce:</strong> <code>map(abs, [-1, 1])</code></li>
+            <li><strong>List Comprehensions:</strong> <code>[x for x in range(9) if x % 2]</code></li>
+            <li><strong>Generators:</strong> Use <code>yield</code> to produce a sequence of values lazily.</li>
             <li><strong>Lazy Evaluation:</strong> Delay computation until necessary, improving performance.</li>
-            <li><strong>Recursion:</strong> Use recursive functions for problems like tree traversal.</li>
-            <li><strong>Monads:</strong> Handle side effects (like state, I/O) in a controlled manner.</li>
-            <li><strong>Pattern Matching:</strong> Simplify conditional logic based on data structure.</li>
         </ul>
     </div>
+<p style="font-size:0.8em; margin-top: 1em;">
+    Docs: <a href="https://docs.python.org/3/howto/functional.html#" target="_blank">Functional Programming HOWTO</a>
+</p>
     <aside class="notes">
+There are other useful functional concepts in Python that can makes our life easier. Iterators let you loop over data without loading it all into memory. You can use map, filter, and reduce to apply a function to every item in a list. List comprehensions provide a concise way to create lists. Generators allow you to produce sequences of values on the fly. And lazy evaluation delays computation until it's really needed, which can boost performance.
     </aside>
 </section>
 
@@ -337,8 +363,7 @@ This slide illustrates the railway pattern for error handling. The idea is to re
                 href="https://lucajiang.github.io/functional_python/">lucajiang.github.io/functional_python/</a></li>
     </ul>
     <aside class="notes">
-        Thank you all for your attention! If you have any questions or want to discuss anything further, feel free to
-        reach out to me on GitHub or check out the slides online.
+Thank you for your attention. You can find me on GitHub at LucaJiang, and the slides of this talk are available online.
     </aside>
 </section>
 
