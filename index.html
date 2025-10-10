@@ -28,18 +28,18 @@
     <h3>Practical Paradigms for Readable and Robust Code</h3>
 <div style="display: flex; justify-content: center; align-items: center; gap: 4rem; margin-top: 2.5em;">
     <img src="img/pycon_logo.svg" alt="PyCon HK Logo" style="height: 160px;">
-    <div style="text-align: center;margin-left: 4rem;margin-right: 4rem;">
-        <p style="margin: 0;">Wenxin Jiang</p>
+    <div style="text-align: center;margin-left: 2rem;margin-right: 2rem;">
+        <p style="margin: 0;">Wenxin Jiang, Jian Yin</p>
         <p style="margin: 0; font-size: 0.8em;">Oct. 11, 2025</p>
     </div>
     <img src="img/CityU_logo.svg" alt="CityU Logo" style="height: 120px;">
 </div>
 <aside class="notes">
-Good afternoon, everyone. I'm really happy to meet you here at PyCon HK.
+Good afternoon, everyone. I'm really happy to meet you here at PyConHK. I'm Jiang Wenxin. This work is done in collaboration with Yin Jian. We are both PhD students at CityUHK.
 
 While object-oriented design gets most of the attention in Python, there's another way of thinking that can make your code clear and reliable. That is functional programming.
 
-Today, I'm going to show you how a few simple ideas from functional programming, like writing predictable functions and avoiding hidden changes to your data, can make your Python code easier to read, simpler to test, and a joy to work with.
+Today, I'm going to show you how a few simple ideas from functional programming, like writing predictable functions and keeping immutability in your data, can make your Python code easy to read, simple to test, and a enjoyable to work with.
 
 Let's get started.
 </aside>
@@ -109,9 +109,7 @@ This passion is what drove me to explore functional programming in Python. And I
 Let's start with a simple example: a table of student scores. Each row contains a student's name, class, subject, and their score.
 
 But we notice that one entry has Error indicating the data was missing or corrupted.
-
-This kind of issue is very common in real-world data, (especially in fields like biology). ( I've definitely had moments where I freaked out after opening a dataset full of 'N/A' or 'NULL' values!)
-
+This kind of issue is very common in real-world data. Sometimes they are NA, or even wrong types like strings instead of numbers.
 In real projects, I believe most of us need to start our analysis with such messy datasets. Before diving into tasks like calculating grades, or finding averages for each subject or class, we need to carefully clean the data and handle errors first.
     </aside>
 </section>
@@ -122,11 +120,12 @@ In real projects, I believe most of us need to start our analysis with such mess
     <img src="img/illu_imperative.png" alt="Imperative Code Example" style="width: 70%; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 8px;"/>
 </div>
 <aside class="notes">
-The traditional way to handle this is using the imperative style. While we don't need to go through every line of code here, the key point is that it's very detailed and step-by-step.
+This is imperative style, don't need to read through this. It's just an example to illustrate the ideas.
+This is the traditional way, and the key point is that it's very detailed and step-by-step.
 
 In imperative style, we tell the computer exactly how to do each task. For example, we write a for loop to process each row, use try-except to handle errors, and rely on if-elif chains to calculate grades. We also manually update statistics step by step. 
 
-It works, but it's long and hard to follow, especially as things get more complex. You have to read through all the details to understand the overall logic. (I always get lost in such code, and I bet I'm not the only one)
+It works, but it's long and hard to follow, especially as things get more complex. You have to read through all the details to understand the overall logic. I always get lost in such code.
 </aside>
 </section>
 
@@ -138,11 +137,9 @@ It works, but it's long and hard to follow, especially as things get more comple
 <aside class="notes">
 Now, with the functional approach, we can focus directly on what our goal is, without worrying about the details of how to achieve it. 
 
-By chaining operations together using methods like pipe, we create a clear and logical pipeline. 
-
-Each step uses a simple function to handle a specific task, such as adding grades, filtering scores, or calculating averages. 
-
-This makes the main code shorter, more readable, easier to follow, and much simpler to test and modify.
+We pack each step into a small simple function. And each function handle a specific task, such as adding grades, filtering scores, or calculating averages. 
+Linking these functions together using methods like pipe, we create a clear and logical pipeline. 
+This makes the main code short, readable, easy to follow, and simple to test and modify.
 </aside>
 </section>
 
@@ -156,14 +153,10 @@ This makes the main code shorter, more readable, easier to follow, and much simp
         <li>One function, one task</li>
     </ul>
     <aside class="notes">
-We can find that, the core tenet of functional programming is writing pure functions.
-
-A pure function is like a simple math equation: it takes some input, gives you an output. 
-
-It doesn't change anything else in your program - no side effects. 
-
-It's really reliable: they always produce the same result for the same input. 
-
+The core principle of functional programming is function and especially pure function.
+A pure function is one that does not have side effects. This means it doesn't change any data outside of itself.
+We also avoid using global variables that can be changed from anywhere. This keeps our functions isolated and predictable.
+And, it's like a simple math equation: it takes some input, gives you an output. And if you give it the same input again, it will always return the same output.
 Each function should focus on doing just one thing well. Pure functions make your code predictable and easy to test and maintain.
     </aside>
 </section>
@@ -213,9 +206,9 @@ Each function should focus on doing just one thing well. Pure functions make you
     <aside class="notes">
 This table highlights the two key principles of functional programming.
 
-On the function side, we want no side effects. Functions shouldn't unexpectedly change any other parts of your program. On the variable side, we want immutability. Data shouldn't be changed once created. These principles are interconnected: if your data is immutable, your functions naturally avoid side effects, because they can't modify the data.
+On the function side, we want no side effects. Functions shouldn't unexpectedly change any other parts of your program. On the variable side, we want immutability. Data shouldn't be changed once created. These principles are connected: if your data is immutable, your functions naturally avoid side effects, because they can't modify the data.
 
-As I mentioned in today's another talk, recent Python versions now support true parallelism, which is a really exciting development. Functional programming helps here too, by ensuring code stability in multi-threaded environments.
+As I will mention in my another talk, recent Python versions now support true parallelism, which is a really exciting development. Functional programming helps here too, by ensuring code stability in multi-threaded tasks.
     </aside>
 </section>
 
@@ -235,13 +228,12 @@ bonus_scores = add_bonus(scores)
 print(original_scores) # Output: [95, 84, 70]  😱 Changed!</code></pre>
 <p style="color: #eb2a2a; margin-top: 5px; font-size: 1em;">⚠️ Unexpected mutation causes bugs!</p>
     <aside class="notes">
-As we just saw, immutability is a key idea in functional programming. 
+As I have mentioned, immutability is a key idea in functional programming.
 
 But why does it matter so much? What's the problem with ignoring immutability?
 
-Let me show you a common pitfall. Imagine a simple task that we want to add a bonus to some scores. But the function changes the original list! Now both variables point to the same changed data. (This means some students might get an unexpected bonus, which is unfair!)
-
-This kind of bug is especially tricky to catch in larger programs, where data is shared between multiple parts of the code. That's precisely why we strive to avoid mutable state—it helps prevent subtle, hard-to-spot errors.
+Let me show you a common pitfall. Imagine a simple task that we want to add a bonus to some scores. We have a original scores, and we have bonus scores after adding 10 points.
+But this function somehow changes the original list! Because two score variables point to the same list in memory. Some students' scores might get an unexpected bonus, which is totally unfair!
     </aside>
 </section>
 
@@ -263,9 +255,8 @@ print(original_scores)
     <aside class="notes">
 Now let's look at the functional solution. 
 
-Instead of changing the original data, we create a brand new list with the updated values. The original stays safe and unchanged. 
-
-This is why functional programming gives me greater confidence in my code. Without it, I've often spent hours tracking down bugs caused by some other function hundreds of lines away. When I found it, it was like a Goblin suddenly jumping out and saying "Surprise! I changed your data!".
+Instead of changing the original data, here in this function, we create a brand new list with the updated values. The original stays safe and unchanged.
+This is why functional programming gives me greater confidence in my code. Without it, I've often spent hours tracking down bugs caused by some other function hundreds of lines away. When I found it, it was like a Goblin suddenly jump out and say "Surprise! I changed your data!".
     </aside>
 </section>
 
@@ -277,15 +268,11 @@ This is why functional programming gives me greater confidence in my code. Witho
         <li><strong>Robustness/Testability:</strong> Easier to test</li>
     </ul>
     <aside class="notes">
-I'll summarize the main benefits of functional programming.
-
-First, readability: focus on what you want, not how to do it. It's like giving a command to “go to the store” without listing every turn along the way.
-
-Second, modularity: small functions act like road signs on a journey. They're clear and easy to follow, helping you navigate step by step while still keeping the bigger picture in mind.
-
-Third, testability: the route is fixed, which means same starting point, same path, same destination, every single time. No surprises, no detours.
-
-In the end, it's about writing code that's easier to read, test, and maintain.
+So why choose functional programming?
+First, readability: focus on what you want, not how to do it. It's like giving a command to come to CityU without listing every detail, like go to Kowloon Tong, then Festival Walk.
+Second, modularity: small functions act like logo blocks. You can build complex behavior by combining simple, well-defined pieces. Each function does one thing, and does it well.
+Third, testability: pure functions are predictable and isolated. You can easily write tests for them without worrying about the rest of your program.
+In the end, it's about writing code that's easier to read, test, and maintain. No surprises, no getting lost.
     </aside>
 </section>
 
@@ -320,12 +307,9 @@ different ways. This makes your code more flexible and modular.
         </div>
     </div>
     <aside class="notes">
-Let me inspire you with a mathematical perspective on function composition.
-
-There are two common approaches: the traditional nested style and the pipeline style. 
-
-Nested code is like a maze — you have to start at the innermost function and work your way outward. It's easy to get lost in the complexity.
-
+Well. If you are familiar with R language, you must know the pipe operator. It make data analysis code super clean and easy to read. If not, no worries, let me inspire you with a mathematical perspective on function composition.
+There are two common approaches: the traditional nested style and the pipeline style.
+Nested code is like a maze — you have to find and start at the innermost function and work your way outward. It's really easy to get lost.
 The pipeline style, on the other hand, tells a much more straightforward story: first apply f, then pipe to g with argument a, then to h with b. The flow is simple, clean, and easy to follow.
     </aside>
 </section>
@@ -337,16 +321,12 @@ The pipeline style, on the other hand, tells a much more straightforward story: 
     </div>
     <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
     <aside class="notes">
-
-Imagine building a railway system where each piece of track serves a specific purpose. I'll use this to illustrate function composition first.
-
+Another analogy for function composition is railway tracks.
+Imagine building a railway system where each piece of track serves a specific purpose.
 Functional programming is a practical way to build complex behavior from small, reliable pieces.
-
 Think of each function as a small piece of track: one turns a pineapple into an apple, another turns an apple into a banana.
-
 We can compose them because the output of one function matches the input of the next.
-
-Each piece is small, testable, and reusable. When requirements change, we can simply add or adjust functions without rewriting the entire track.
+Each piece is small, testable, and reusable. When requirements change, we can simply add or adjust some functions without rewriting the entire track.
     </aside>
 </section>
 
@@ -358,14 +338,10 @@ Each piece is small, testable, and reusable. When requirements change, we can si
     <p style="font-size: 0.5em; margin-top: 0pt;">Source: <a href="https://speakerdeck.com/swlaschin/railway-oriented-programming-a-functional-approach-to-error-handling?">Railway Oriented Programming</a></p>
     <aside class="notes">
 Now let's add the second track to handle errors. Top green track for normal values, bottom red track for errors.
-
 Each function acts like a switch: if it succeeds, the flow continues on the green track; if it fails, we drop to the red track, bypassing the rest of the pipeline.
-
-In Python, raising an exception automatically redirects the flow to the nearest except block — that's our red track.
-
-We write small, composable steps where each function either returns a value or raise a specific error. All errors are then handled in one centralized place.
-
-Therefore, our main pipeline stays clean and focused on the happy path. And we don't need nested try-except blocks everywhere.
+In Python, we can raise an exception automatically redirects the flow to the nearest except block — that's our red track.
+We write small, composable steps where each function either returns a value or raises a specific error. All errors are then handled in one centralized place.
+Therefore, our main pipeline stays clean and focused on the happy green path. And we don't need nested try-except blocks everywhere.
     </aside>
 </section>
 
@@ -385,15 +361,10 @@ Therefore, our main pipeline stays clean and focused on the happy path. And we d
 </p>
     <aside class="notes">
 There are also some other useful functional concepts in Python that can makes our life easier. Here's a brief overview. 
-
 Iterators let you loop over data without loading it all into memory.
-
 Map, filter, and reduce allow you to apply functions to collections in a clean and efficient way.
-
 List comprehensions provide a concise way to create lists. 
-
 Generators allow you to produce sequences of values on the fly. 
-
 And lazy evaluation delays computation until it's really needed, which can boost performance.
     </aside>
 </section>
