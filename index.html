@@ -219,20 +219,21 @@ As I will mention in my another talk, recent Python versions now support true pa
 
 def add_bonus(score_list):
     for i in range(len(score_list)):
-        score_list[i] += 10  # Modifies original!
+        if i % 2: # Only add bonus to odd index
+            score_list[i] += 10  # Modifies original!
     return score_list
 
 original_scores = scores
 bonus_scores = add_bonus(scores)
 
-print(original_scores) # Output: [95, 84, 70]  😱 Changed!</code></pre>
+print(original_scores) # Output: [85, 84, 60]  😱 Changed!</code></pre>
 <p style="color: #eb2a2a; margin-top: 5px; font-size: 1em;">⚠️ Unexpected mutation causes bugs!</p>
     <aside class="notes">
 As I have mentioned, immutability is a key idea in functional programming.
 
 But why does it matter so much? What's the problem with ignoring immutability?
 
-Let me show you a common pitfall. Imagine a simple task that we want to add a bonus to some scores. We have a original scores, and we have bonus scores after adding 10 points.
+Let me show you a common pitfall. Imagine a simple task that we want to add a bonus to some of scores. We have a original scores, and we have bonus scores after adding 10 points.
 But this function somehow changes the original list! Because two score variables point to the same list in memory. Some students' scores might get an unexpected bonus, which is totally unfair!
     </aside>
 </section>
@@ -244,7 +245,8 @@ But this function somehow changes the original list! Because two score variables
 
 def add_bonus(score_list):
     # Create new list, don't modify original
-    return [score + 10 for score in score_list]
+    return [score + 10 if i % 2 else score \
+            for i, score in enumerate(score_list)]
 
 original_scores = scores
 bonus_scores = add_bonus(scores)
